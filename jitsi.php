@@ -25,7 +25,7 @@ if ( isset ( $_POST['dump'] ) ) {
 
 // Built the identifier with the POST information
 $_USERNAME = split ( '@', $_POST['user'] );
-$_ACC = "lakanaprovisioned-" . $_USERNAME[0];
+$_ACC = "provisioned-" . $_USERNAME[0];
 
 // Built the properties array(s)
 $_SIP = array(
