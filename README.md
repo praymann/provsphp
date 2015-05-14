@@ -21,8 +21,7 @@ $ curl --data 'user=johndoe@example.onsip.com&pass=examplepassword' http://examp
 
 # To-do List
 * Add a lot more error handling
-* Allow for onSip account aliases
-* -Flesh out better functions for onSip API calls-
-** Moved SessionID handling to a global set with a function
-** Auto added to API Action if set
+* Handle API Timeouts due to bad password
+* Allow for onSip account aliases via Action UserAddressBrowse
+* -Flesh out better functions for onSip API calls- (Moved SessionID handling to a global set with a function & auto added to API Action if set )
 * -POST to destory onSip API SessionId-
