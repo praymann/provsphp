@@ -1,9 +1,8 @@
-# provsphp
+# pphp
 PHP Scripts to provision Jitsi for onSip
 
-# What am I?
-Jitsi has the awesome functionality of provisioning, and this collection of php scripts allow a webserver to response with the properties to provision a client.
-It leverages the onSip API to take in some onSip credentials and spit back the Jabber/Sip properties.
+# Purpose
+This collection of php scripts leverages the onSip API to take in some onSip credentials and spit back the Jabber/Sip properties required for provisioning a Jitsi client.
 
 # Requirements
 * php5
@@ -11,17 +10,28 @@ It leverages the onSip API to take in some onSip credentials and spit back the J
 
 # Install
 * git clone [repo]
-* Put Apache2/${webserver}/etc. in front
+* Put Apache2 in front
+* ???
 
-Example URI:
+# Usage:
+
+
+Jitsi Client:
+
+Format and feed into Jitsi the URI like so:
+```
+https://example.com/jitsi.php?user=johndoe@example.onsip.com&pass=password
+```
+
+Testing vi CLI:
 
 ```
-$ curl --data 'user=johndoe@example.onsip.com&pass=examplepassword' http://example.com/jitsi.php
+$ curl -d 'user=johndoe@example.onsip.com&pass=examplepassword' http://example.com/jitsi.php
 ```
 
 # To-do List
 * Add a lot more error handling
 * Handle API Timeouts due to bad password
 * Allow for onSip account aliases via Action UserAddressBrowse
-* -Flesh out better functions for onSip API calls- (Moved SessionID handling to a global set with a function & auto added to API Action if set )
-* -POST to destory onSip API SessionId-
+* ~~Flesh out better functions for onSip API calls~~ (Moved SessionID handling to a global set with a function & auto added to API Action if set )
+* ~~POST to destory onSip API SessionId~~
