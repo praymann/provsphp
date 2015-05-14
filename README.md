@@ -1,4 +1,4 @@
-# pphp
+# provsphp
 PHP Scripts to provision Jitsi for onSip
 
 # Purpose
@@ -14,7 +14,6 @@ This collection of php scripts leverages the onSip API to take in some onSip cre
 * ???
 
 # Usage:
-
 
 Jitsi Client:
 
@@ -33,5 +32,5 @@ $ curl -d 'user=johndoe@example.onsip.com&pass=examplepassword' http://example.c
 * Add a lot more error handling
 * Handle API Timeouts due to bad password
 * Allow for onSip account aliases via Action UserAddressBrowse
-* ~~Flesh out better functions for onSip API calls~~ (Moved SessionID handling to a global set with a function & auto added to API Action if set )
-* ~~POST to destory onSip API SessionId~~
+* ~~Flesh out better functions for onSip API calls~~ (Moved SessionID handling to a global varible, set with a function, & auto added to API Action if set )
+* ~~POST to destroy onSip API SessionId~~
