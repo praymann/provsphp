@@ -1,11 +1,19 @@
 <?php
 
+// Include functions for XML 
+include 'xml.php';
+
 $_URL = 'https://api.onsip.com/api';
 
-function post_onsip_action($action,$data) {
+$_SESSION = null;
 
+function post_onsip_action($action,$data) {
+	global $_SESSION;
 	global $_URL;
 
+	if ( isset ( $_SESSION ) ) {
+		$action .= "&SessionId=$_SESSION";
+	}
 	$post = "Action=" . $action . '&' . $data;
 	
 	$ch = curl_init();
@@ -16,6 +24,12 @@ function post_onsip_action($action,$data) {
 
 	$response = curl_exec($ch);
 	curl_close($ch);
-	return $response;
+	return xml_to_array($response);
 };
+
+function set_onsip_session($xml) {
+	global $_SESSION;
+	$_SESSION = $xml['Context']['Session']['SessionId'];
+};
+
 ?>

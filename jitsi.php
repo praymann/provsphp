@@ -1,30 +1,30 @@
 <?php
 
-// Include functions for XML 
-include 'xml.php';
 // Include functions for onSip
 include 'onsip.php';
 
 // First check POST for correct data
 if ( $_POST['user']===NULL or $_POST['pass']===NULL ) {
 	header('X-PHP-Response-Code: 400', true, 400);
-	exit("Are you passing {user} and {pass}? Exiting...");
+	exit("HTTP 400 - BAD REQUEST\nAre you passing {user} and {pass}?");
 }
 
 // Pull Session with onSip API
 $_DATA = 'Username=' . urlencode($_POST['user']) . '&Password=' . $_POST['pass'];
-$_RESPONSE = post_onsip_action('SessionCreate',$_DATA);
-$_XML = xml_to_array($_RESPONSE);
-$_SESSION = $_XML['Context']['Session']['SessionId'];
+$_XML = post_onsip_action('SessionCreate',$_DATA);
+set_onsip_session($_XML);
 
 // Pull this User's information from onSip API
 $_DATA = 'UserAddress=' . urlencode($_POST['user']);
-$_RESPONSE = post_onsip_action("UserRead&SessionId=$_SESSION",$_DATA);
-$_XML = xml_to_array($_RESPONSE);
+$_XML = post_onsip_action("UserRead",$_DATA);
 
 // If the request has dump set to anything, dump the user information request from onSip API
 if ( isset ( $_POST['dump'] ) ) {
 	var_dump($_XML);
+
+	$_DATA = "UserId=" . $_XML['Result']['UserRead']['User']['UserId'];
+	$_DUMP = post_onsip_action("UserAddressBrowse",$_DATA);
+	var_dump($_DUMP);
 }
 
 // Account property identifiers MUST always start with the “acc” substring. It doesn’t matter what you put after the “acc” as long as it’s unique between the accounts and the same across the different properties for the same account. But, again, you do need to start with “acc".
@@ -86,13 +86,6 @@ echo "net.java.sip.communicator.plugin.provisioning.METHOD=\${null}\n";
 echo "net.java.sip.communicator.plugin.provisioning.URL=\${null}\n";
 
 // destory sessionid http://developer.onsip.com/admin-api/Authentication/
-$_DATA = "SessionId=" . $_SESSION;
-$_RESPONSE = post_onsip_action('SessionDestroy',$_DATA);
-$_XML = xml_to_array($_RESPONSE);
-
-// If the request has dump set to anything, dump the user information request from onSip API
-if ( isset ( $_POST['dump'] ) ) {
-	var_dump($_XML);
-}
+post_onsip_action('SessionDestroy', "Burn it with fire");
 
 ?>
