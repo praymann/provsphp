@@ -5,15 +5,21 @@ include 'xml.php';
 // Include functions for onSip
 include 'onsip.php';
 
+// First check POST for correct data
+if ( $_POST['user']===NULL or $_POST['pass']===NULL ) {
+	header('X-PHP-Response-Code: 400', true, 400);
+	exit("Are you passing {user} and {pass}? Exiting...");
+}
+
 // Pull Session with onSip API
 $_DATA = 'Username=' . urlencode($_POST['user']) . '&Password=' . $_POST['pass'];
-$_RESPONSE = post_onsip_action('Action=SessionCreate&',$_DATA);
+$_RESPONSE = post_onsip_action('SessionCreate',$_DATA);
 $_XML = xml_to_array($_RESPONSE);
 $_SESSION = $_XML['Context']['Session']['SessionId'];
 
 // Pull this User's information from onSip API
 $_DATA = 'UserAddress=' . urlencode($_POST['user']);
-$_RESPONSE = post_onsip_action("Action=UserRead&SessionId=$_SESSION&",$_DATA);
+$_RESPONSE = post_onsip_action("UserRead&SessionId=$_SESSION",$_DATA);
 $_XML = xml_to_array($_RESPONSE);
 
 // If the request has dump set to anything, dump the user information request from onSip API
@@ -80,4 +86,13 @@ echo "net.java.sip.communicator.plugin.provisioning.METHOD=\${null}\n";
 echo "net.java.sip.communicator.plugin.provisioning.URL=\${null}\n";
 
 // destory sessionid http://developer.onsip.com/admin-api/Authentication/
+$_DATA = "SessionId=" . $_SESSION;
+$_RESPONSE = post_onsip_action('SessionDestroy',$_DATA);
+$_XML = xml_to_array($_RESPONSE);
+
+// If the request has dump set to anything, dump the user information request from onSip API
+if ( isset ( $_POST['dump'] ) ) {
+	var_dump($_XML);
+}
+
 ?>
