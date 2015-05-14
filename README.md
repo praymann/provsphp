@@ -10,6 +10,14 @@ It leverages the onSip API to take in some onSip credentials and spit back the J
 * php5-curl
 
 # Install
+* git clone [repo]
+* Put Apache2/${webserver}/etc. in front
+
+Example URI:
+
+```
+$ curl --data 'user=johndoe@example.onsip.com&pass=examplepassword' http://example.com/jitsi.php
+```
 
 # To-do List
 * Add a lot more error handling
