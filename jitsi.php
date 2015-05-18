@@ -37,7 +37,7 @@ if ( isset ( $_POST['dump'] ) ) {
 
 // Built the identifier with the POST information
 $_USERNAME = split ( '@', $_POST['user'] );
-$_ACC = "provisioned-" . $_USERNAME[0];
+$_ACC = sha1($_USERNAME[0],false);
 
 // Built the properties array(s)
 $_JABBER = array(
@@ -58,7 +58,7 @@ echo "net.java.sip.communicator.impl.protocol.jabber.acc" . $_ACC . "=" . "\${nu
 $_SIP = array();
 
 foreach($_ADDRESSES['Result']['UserAddressBrowse']['UserAddresses']['UserAddress'] as $key => $value) {
-        $_ACC = "provisioned-" . $value['Address']['Username'];
+	$_ACC = sha1($value['Address']['Username'],false);
         $_SIP[$key] = array(
                 "net.java.sip.communicator.impl.protocol.sip.acc" . $_ACC => "acc" . $_ACC,
                 "net.java.sip.communicator.impl.protocol.sip.acc" . $_ACC . ".ACCOUNT_UID" => "SIP\:" . $value['Address']['Username'] . "@" . $value['Address']['Domain'],
@@ -96,9 +96,6 @@ foreach ($_JABBER as $property => $value) {
 
 	echo "$property" . '=' . "$value\n";
 }
-
-echo "net.java.sip.communicator.plugin.provisioning.METHOD=\${null}\n";
-echo "net.java.sip.communicator.plugin.provisioning.URL=\${null}\n";
 
 // destory sessionid http://developer.onsip.com/admin-api/Authentication/
 post_onsip_action('SessionDestroy', "Burn it with fire");
