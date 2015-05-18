@@ -15,6 +15,9 @@ function post_onsip_action($action,$data) {
 		$action .= "&SessionId=$_SESSION";
 	}
 	$post = "Action=" . $action . '&' . $data;
+	if ( isset($_POST['dump']) ) {
+		print $post . "\n";
+	}
 	
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $_URL);
@@ -30,6 +33,9 @@ function post_onsip_action($action,$data) {
 function set_onsip_session($xml) {
 	global $_SESSION;
 	$_SESSION = $xml['Context']['Session']['SessionId'];
+	if ( isset($_POST['dump']) ) {
+                print "SessionId:" . $_SESSION . "\n";
+        }
 };
 
 ?>
