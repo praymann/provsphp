@@ -53,6 +53,8 @@ $_JABBER = array(
 	"net.java.sip.communicator.impl.protocol.jabber.acc" . $_ACC . ".USER_ID" => $_POST['user']
 );
 
+echo "net.java.sip.communicator.impl.protocol.jabber.acc" . $_ACC . "=" . "\${null}\n";
+
 $_SIP = array();
 
 foreach($_ADDRESSES['Result']['UserAddressBrowse']['UserAddresses']['UserAddress'] as $key => $value) {
@@ -77,6 +79,7 @@ foreach($_ADDRESSES['Result']['UserAddressBrowse']['UserAddresses']['UserAddress
                 "net.java.sip.communicator.impl.protocol.sip.acc" . $_ACC . ".DISPLAY_NAME" => $value['Address']['Name'],
                 "net.java.sip.communicator.impl.protocol.sip.acc" . $_ACC . ".VOICEMAIL_ENABLED" => "true"
         );
+	echo "net.java.sip.communicator.impl.protocol.sip.acc" . $_ACC . "=" . "\${null}\n";
 }
 
 
@@ -86,13 +89,11 @@ foreach($_ADDRESSES['Result']['UserAddressBrowse']['UserAddresses']['UserAddress
 // Spit out all the properties, but make sure to clear the value first
 foreach ($_SIP as $key => $array) {
 	foreach ($array as $property => $value) {
-		echo "$property" . '=' . "\${null}\n";
 		echo "$property" . '=' . "$value\n";
 	}
 }
 foreach ($_JABBER as $property => $value) {
 
-	echo "$property" . '=' . "\${null}\n";
 	echo "$property" . '=' . "$value\n";
 }
 
